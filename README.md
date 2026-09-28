@@ -1,2 +1,2 @@
 # GoVET
-Ausbildungsprojekt für Golang
+Diverse grundlegende Programmierübungen zum Erlernen von Golang
