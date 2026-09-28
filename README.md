@@ -1,0 +1,2 @@
+# GoVET
+Ausbildungsprojekt für Golang
