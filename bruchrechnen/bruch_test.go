@@ -105,3 +105,149 @@ func TestBruch_Kuerze(t *testing.T) {
 		})
 	}
 }
+
+func TestBruch_Erweitere(t *testing.T) {
+	tests := []struct {
+		name   string
+		bruch  bruchrechnen.Bruch
+		faktor int
+		want   bruchrechnen.Bruch
+	}{
+		{name: "normal", bruch: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, faktor: 2, want: bruchrechnen.Bruch{Zaehler: 6, Nenner: 8}},
+		{name: "negativer_faktor", bruch: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, faktor: -2, want: bruchrechnen.Bruch{Zaehler: -6, Nenner: -8}},
+		{name: "null_faktor", bruch: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, faktor: 0, want: bruchrechnen.Bruch{Zaehler: 0, Nenner: 1}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.bruch.Erweitere(tt.faktor)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestBruch_Inverses(t *testing.T) {
+	tests := []struct {
+		name  string
+		bruch bruchrechnen.Bruch
+		want  bruchrechnen.Bruch
+	}{
+		{name: "positiv", bruch: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, want: bruchrechnen.Bruch{Zaehler: -3, Nenner: 4}},
+		{name: "negativ", bruch: bruchrechnen.Bruch{Zaehler: -3, Nenner: 4}, want: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}},
+		{name: "null", bruch: bruchrechnen.Bruch{Zaehler: 0, Nenner: 7}, want: bruchrechnen.Bruch{Zaehler: 0, Nenner: 7}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.bruch.Inverses()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestBruch_Addiere(t *testing.T) {
+	tests := []struct {
+		name    string
+		bruch   bruchrechnen.Bruch
+		summand bruchrechnen.Bruch
+		want    bruchrechnen.Bruch
+	}{
+		{name: "verschiedene_nenner", bruch: bruchrechnen.Bruch{Zaehler: 1, Nenner: 2}, summand: bruchrechnen.Bruch{Zaehler: 1, Nenner: 3}, want: bruchrechnen.Bruch{Zaehler: 5, Nenner: 6}},
+		{name: "gleicher_nenner", bruch: bruchrechnen.Bruch{Zaehler: 2, Nenner: 5}, summand: bruchrechnen.Bruch{Zaehler: 1, Nenner: 5}, want: bruchrechnen.Bruch{Zaehler: 3, Nenner: 5}},
+		{name: "negative_werte", bruch: bruchrechnen.Bruch{Zaehler: -1, Nenner: 3}, summand: bruchrechnen.Bruch{Zaehler: 1, Nenner: 6}, want: bruchrechnen.Bruch{Zaehler: -1, Nenner: 6}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.bruch.Addiere(tt.summand)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestBruch_Subtrahiere(t *testing.T) {
+	tests := []struct {
+		name    string
+		bruch   bruchrechnen.Bruch
+		summand bruchrechnen.Bruch
+		want    bruchrechnen.Bruch
+	}{
+		{name: "normal", bruch: bruchrechnen.Bruch{Zaehler: 1, Nenner: 2}, summand: bruchrechnen.Bruch{Zaehler: 1, Nenner: 3}, want: bruchrechnen.Bruch{Zaehler: 1, Nenner: 6}},
+		{name: "negative_ergebnis", bruch: bruchrechnen.Bruch{Zaehler: 1, Nenner: 3}, summand: bruchrechnen.Bruch{Zaehler: 1, Nenner: 2}, want: bruchrechnen.Bruch{Zaehler: -1, Nenner: 6}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.bruch.Subtrahiere(tt.summand)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestBruch_Kehrwert(t *testing.T) {
+	tests := []struct {
+		name    string
+		bruch   bruchrechnen.Bruch
+		want    bruchrechnen.Bruch
+		wantErr bool
+	}{
+		{name: "normal", bruch: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, want: bruchrechnen.Bruch{Zaehler: 4, Nenner: 3}},
+		{name: "null_zaehler", bruch: bruchrechnen.Bruch{Zaehler: 0, Nenner: 5}, wantErr: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := tt.bruch.Kehrwert()
+			if tt.wantErr {
+				assert.Error(t, err)
+				return
+			}
+			assert.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestBruch_Multipliziere(t *testing.T) {
+	tests := []struct {
+		name   string
+		bruch  bruchrechnen.Bruch
+		faktor bruchrechnen.Bruch
+		want   bruchrechnen.Bruch
+	}{
+		{name: "normal", bruch: bruchrechnen.Bruch{Zaehler: 2, Nenner: 3}, faktor: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, want: bruchrechnen.Bruch{Zaehler: 6, Nenner: 12}},
+		{name: "negative", bruch: bruchrechnen.Bruch{Zaehler: -2, Nenner: 3}, faktor: bruchrechnen.Bruch{Zaehler: 4, Nenner: -5}, want: bruchrechnen.Bruch{Zaehler: -8, Nenner: -15}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.bruch.Multipliziere(tt.faktor)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestBruch_Dividiere(t *testing.T) {
+	tests := []struct {
+		name    string
+		bruch   bruchrechnen.Bruch
+		faktor  bruchrechnen.Bruch
+		want    bruchrechnen.Bruch
+		wantErr bool
+	}{
+		{name: "normal", bruch: bruchrechnen.Bruch{Zaehler: 1, Nenner: 2}, faktor: bruchrechnen.Bruch{Zaehler: 3, Nenner: 4}, want: bruchrechnen.Bruch{Zaehler: 4, Nenner: 6}},
+		{name: "divisor_null", bruch: bruchrechnen.Bruch{Zaehler: 1, Nenner: 2}, faktor: bruchrechnen.Bruch{Zaehler: 0, Nenner: 4}, wantErr: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := tt.bruch.Dividiere(tt.faktor)
+			if tt.wantErr {
+				assert.Error(t, err)
+				return
+			}
+			assert.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
