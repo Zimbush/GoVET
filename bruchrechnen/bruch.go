@@ -16,6 +16,9 @@ func GGT(a, b int) int {
 }
 
 func KGV(a, b int) int {
+	if a == 0 || b == 0 {
+		return 0
+	}
 	if a < 0 {
 		a = -a
 	}

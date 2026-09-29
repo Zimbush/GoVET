@@ -64,6 +64,31 @@ func TestNewBruch(t *testing.T) {
 	}
 }
 
+func TestKGV(t *testing.T) {
+	tests := []struct {
+		name string
+		a    int
+		b    int
+		want int
+	}{
+		{name: "beide_null", a: 0, b: 0, want: 0},
+		{name: "ein_zerowert", a: 0, b: 9, want: 0},
+		{name: "teilerfremd", a: 4, b: 9, want: 36},
+		{name: "gemeinsame_teiler", a: 6, b: 9, want: 18},
+		{name: "vielfaches", a: 12, b: 6, want: 12},
+		{name: "vielfaches_negativ", a: -15, b: 5, want: 15},
+		{name: "negative_werte", a: -6, b: 9, want: 18},
+		{name: "gleiche_zahlen", a: 7, b: 7, want: 7},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := bruchrechnen.KGV(tt.a, tt.b)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func TestBruch_BerechneWert(t *testing.T) {
 	tests := []struct {
 		name  string
