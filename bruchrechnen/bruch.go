@@ -28,10 +28,6 @@ func KGV(a, b int) int {
 	return a * b / GGT(a, b)
 }
 
-type Zahl interface {
-	BerechneWert() float64
-}
-
 type Bruch struct {
 	Zaehler int
 	Nenner  int
@@ -46,6 +42,14 @@ func NewBruch(zaehler int, nenner int) (Bruch, error) {
 
 func (bruch Bruch) BerechneWert() float64 {
 	return float64(bruch.Zaehler) / float64(bruch.Nenner)
+}
+
+func (bruch Bruch) BerechneBruch() Bruch {
+	return bruch
+}
+
+func (bruch Bruch) BerechneKommazahl() Kommazahl {
+	return Kommazahl{bruch.BerechneWert()}
 }
 
 func (bruch Bruch) Kuerze() Bruch {
@@ -85,4 +89,9 @@ func (bruch Bruch) Multipliziere(faktor Bruch) Bruch {
 func (bruch Bruch) Dividiere(faktor Bruch) (Bruch, error) {
 	kw, err := faktor.Kehrwert()
 	return bruch.Multipliziere(kw), err
+}
+
+func (bruch Bruch) Mult(zahl Zahl) Zahl {
+	b := zahl.BerechneBruch().Kuerze()
+	return bruch.Multipliziere(b)
 }

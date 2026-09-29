@@ -36,12 +36,12 @@ func TestErmittleNachkommastellen(t *testing.T) {
 func TestKommmazahl_BerechneWert(t *testing.T) {
 	tests := []struct {
 		name string
-		zahl bruchrechnen.Kommmazahl
+		zahl bruchrechnen.Kommazahl
 		want float64
 	}{
-		{name: "ganze_zahl", zahl: bruchrechnen.Kommmazahl{Zahl: 42.0}, want: 42.0},
-		{name: "kommazahl", zahl: bruchrechnen.Kommmazahl{Zahl: 3.14}, want: 3.14},
-		{name: "negative", zahl: bruchrechnen.Kommmazahl{Zahl: -2.75}, want: -2.75},
+		{name: "ganze_zahl", zahl: bruchrechnen.Kommazahl{Zahl: 42.0}, want: 42.0},
+		{name: "kommazahl", zahl: bruchrechnen.Kommazahl{Zahl: 3.14}, want: 3.14},
+		{name: "negative", zahl: bruchrechnen.Kommazahl{Zahl: -2.75}, want: -2.75},
 	}
 
 	for _, tt := range tests {
@@ -55,13 +55,13 @@ func TestKommmazahl_BerechneWert(t *testing.T) {
 func TestKommmazahl_BerechneBruch(t *testing.T) {
 	tests := []struct {
 		name string
-		zahl bruchrechnen.Kommmazahl
+		zahl bruchrechnen.Kommazahl
 		want bruchrechnen.Bruch
 	}{
-		{name: "ganze_zahl", zahl: bruchrechnen.Kommmazahl{Zahl: 42.0}, want: bruchrechnen.Bruch{Zaehler: 42, Nenner: 1}},
-		{name: "einfacher_bruch", zahl: bruchrechnen.Kommmazahl{Zahl: 3.14}, want: bruchrechnen.Bruch{Zaehler: 314, Nenner: 100}},
-		{name: "negative", zahl: bruchrechnen.Kommmazahl{Zahl: -2.75}, want: bruchrechnen.Bruch{Zaehler: -275, Nenner: 100}},
-		{name: "null", zahl: bruchrechnen.Kommmazahl{Zahl: 0.0}, want: bruchrechnen.Bruch{Zaehler: 0, Nenner: 1}},
+		{name: "ganze_zahl", zahl: bruchrechnen.Kommazahl{Zahl: 42.0}, want: bruchrechnen.Bruch{Zaehler: 42, Nenner: 1}},
+		{name: "einfacher_bruch", zahl: bruchrechnen.Kommazahl{Zahl: 3.14}, want: bruchrechnen.Bruch{Zaehler: 314, Nenner: 100}},
+		{name: "negative", zahl: bruchrechnen.Kommazahl{Zahl: -2.75}, want: bruchrechnen.Bruch{Zaehler: -275, Nenner: 100}},
+		{name: "null", zahl: bruchrechnen.Kommazahl{Zahl: 0.0}, want: bruchrechnen.Bruch{Zaehler: 0, Nenner: 1}},
 	}
 
 	for _, tt := range tests {
@@ -70,4 +70,29 @@ func TestKommmazahl_BerechneBruch(t *testing.T) {
 			assert.Equal(t, tt.want, got)
 		})
 	}
+}
+
+func TestKommmazahl_Arithmetik(t *testing.T) {
+	base := bruchrechnen.Kommazahl{Zahl: 2.5}
+
+	t.Run("subtrahiere", func(t *testing.T) {
+		got := base.Subtrahiere(bruchrechnen.Kommazahl{Zahl: 0.5})
+		assert.InDelta(t, 2.0, got.BerechneWert(), 0.0001)
+	})
+
+	t.Run("multipliziere", func(t *testing.T) {
+		got := base.Multipliziere(bruchrechnen.Kommazahl{Zahl: 2.0})
+		assert.InDelta(t, 5.0, got.BerechneWert(), 0.0001)
+	})
+
+	t.Run("dividiere", func(t *testing.T) {
+		got, err := base.Dividiere(bruchrechnen.Kommazahl{Zahl: 0.5})
+		assert.NoError(t, err)
+		assert.InDelta(t, 5.0, got.BerechneWert(), 0.0001)
+	})
+
+	t.Run("dividiere_durch_null", func(t *testing.T) {
+		_, err := base.Dividiere(bruchrechnen.Kommazahl{Zahl: 0})
+		assert.Error(t, err)
+	})
 }
