@@ -1,7 +1,7 @@
 package funktionen_test
 
 import (
-	"funktionen"
+	"govet/funktionen"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

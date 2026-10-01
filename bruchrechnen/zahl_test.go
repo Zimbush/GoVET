@@ -1,7 +1,7 @@
 package bruchrechnen_test
 
 import (
-	"bruchrechnen"
+	"govet/bruchrechnen"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

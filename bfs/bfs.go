@@ -1,4 +1,4 @@
-package main
+package bfs
 
 import (
 	"bufio"
@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func main() {
+func Bfs() {
 	filename := "/home/zimbu/Projekte/BFS/Bestand"
 
 	file, err := os.Open(filename)

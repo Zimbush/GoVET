@@ -1,7 +1,7 @@
 package bedingteanweisung_test
 
 import (
-	"bedingteanweisung"
+	"govet/bedingteanweisung"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

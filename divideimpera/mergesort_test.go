@@ -1,9 +1,8 @@
 package divideimpera_test
 
 import (
+	"govet/divideimpera"
 	"testing"
-
-	"divideimpera"
 
 	"github.com/stretchr/testify/assert"
 )

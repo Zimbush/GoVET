@@ -1,7 +1,7 @@
 package strukturen_test
 
 import (
-	"strukturen"
+	"govet/strukturen"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -1,9 +1,9 @@
-package main
+package start
 
 import (
 	"fmt"
 )
 
-func main() {
+func Greet() {
 	fmt.Println("Hello!")
 }

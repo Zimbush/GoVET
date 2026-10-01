@@ -1,7 +1,7 @@
 package schleifen_test
 
 import (
-	"schleifen"
+	"govet/schleifen"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -1,10 +1,10 @@
-module rechenbaum
+module govet
 
 go 1.27.1
 
 require github.com/stretchr/testify v1.12.1
 
 require (
-	github.com/orsinium-labs/enum v1.5.0 // indirect
+	github.com/orsinium-labs/enum v1.5.0
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 )

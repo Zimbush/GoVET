@@ -1,7 +1,7 @@
 package rechenbaum_test
 
 import (
-	"rechenbaum"
+	"govet/rechenbaum"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

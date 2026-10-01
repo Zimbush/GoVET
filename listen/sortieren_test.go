@@ -1,7 +1,7 @@
 package listen_test
 
 import (
-	"listen"
+	"govet/listen"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
